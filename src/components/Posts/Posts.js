@@ -10,7 +10,7 @@ const Posts = () => {
 
     console.log(posts);
     return (
-        <div>
+        <div className={classes.mainContainer}>
             <h1>POSTS</h1>
             <Post />
             <Post />

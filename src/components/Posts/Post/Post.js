@@ -5,7 +5,7 @@ const Post = () => {
 
     const classes = useStyles();
     return (
-        <div>
+        <div className={classes.card}>
             POST
         </div>
     )

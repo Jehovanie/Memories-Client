@@ -1,4 +1,4 @@
-export default (posts = [], action) => {
+const reducer = (posts = [], action) => {
 
     switch (action.type) {
 
@@ -10,3 +10,5 @@ export default (posts = [], action) => {
             return posts;
     }
 }
+
+export default reducer;
