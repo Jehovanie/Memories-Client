@@ -61,7 +61,7 @@ const Form = () => {
                     <FileBase
                         type="file"
                         multiple={false}
-                        onDone={(base64) => setPostData({ ...postsData, selectedFile: base64 })}
+                        onDone={({ base64 }) => setPostData({ ...postsData, selectedFile: base64 })}
                     />
 
                 </div>
