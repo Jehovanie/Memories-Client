@@ -2,6 +2,11 @@ import React from "react";
 
 import useStyles from './style';
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@material-ui/core";
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import DeleteIcon from '@material-ui/icons/Delete';
+import MoreHorizonIcon from '@material-ui/icons/MoreHoriz';
+import moment from "moment";
+
 
 
 const Post = ({ post }) => {
@@ -12,11 +17,11 @@ const Post = ({ post }) => {
             <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
             <div className={classes.overlay}>
                 <Typography variant="h6">{post.creator}</Typography>
-                <Typography variant="body2">{post.createdAt}</Typography>
+                <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
             <div className={classes.overlay2}>
                 <Button style={{ color: "white" }} size="small" onClick={() => { }}>
-                    See More ...
+                    <MoreHorizonIcon fontSize="default" />
                 </Button>
             </div>
             <div className={classes.delails}>
@@ -31,9 +36,11 @@ const Post = ({ post }) => {
             </CardContent>
             <CardActions className={classes.cardAction}>
                 <Button size="small" color="primary" onClick={() => { }}>
+                    <ThumbUpAltIcon fontSize="small" />
                     Like : {post.likeCount}
                 </Button>
                 <Button size="small" color="primary" onClick={() => { }}>
+                    <DeleteIcon fontSize="small" />
                     Delete
                 </Button>
             </CardActions>
