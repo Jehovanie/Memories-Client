@@ -9,6 +9,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducers';
 
 import App from './App';
+import './index.css';
 
 // const store = createStore(reducer, compose(applyMiddleware(thunk)));
 const store = configureStore({ reducer: reducer })
