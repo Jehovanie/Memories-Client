@@ -9,7 +9,7 @@ import moment from "moment";
 
 
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
 
     const classes = useStyles();
     return (
@@ -20,12 +20,12 @@ const Post = ({ post }) => {
                 <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
             <div className={classes.overlay2}>
-                <Button style={{ color: "white" }} size="small" onClick={() => { }}>
-                    <MoreHorizonIcon fontSize="default" />
+                <Button style={{ color: "white" }} size="small" onClick={() => setCurrentId(post._id)}>
+                    <MoreHorizonIcon fontSize="medium" />
                 </Button>
             </div>
             <div className={classes.delails}>
-                <Typography variant="body2" color="textsecondary">
+                <Typography variant="body2" color="textSecondary">
                     {post.tags.map((tag) => `#${tag} `)}
                 </Typography>
             </div>
