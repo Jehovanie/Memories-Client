@@ -17,7 +17,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getPosts())
-    }, [currentId, dispatch])
+    }, [currentId, dispatch]) ///the effect does not execute if none of its variables change.
 
 
     return (

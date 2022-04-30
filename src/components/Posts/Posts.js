@@ -7,7 +7,7 @@ import useStyles from './style';
 import { Grid, CircularProgress } from "@material-ui/core";
 
 const Posts = ({ setCurrentId }) => {
-    const posts = useSelector((state) => state.posts)
+    const posts = useSelector((state) => state.posts) /// use for handling to [ store.getState()];
     const classes = useStyles();
 
     return (

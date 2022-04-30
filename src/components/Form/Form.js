@@ -13,6 +13,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
     const dispatch = useDispatch();
 
+
     const post = useSelector((state) => currentId ? state.posts.find((p) => p._id == currentId) : null) // get the current post to update 
 
     useEffect(() => {
@@ -24,6 +25,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
         if (currentId) {
             dispatch(updatedPost(currentId, postData))
+
         } else {
             dispatch(createPost(postData));
         }
