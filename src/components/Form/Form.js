@@ -14,7 +14,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const dispatch = useDispatch();
 
 
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id == currentId) : null) // get the current post to update 
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null) // get the current post to update 
 
     useEffect(() => {
         if (post) setPostData(post)
