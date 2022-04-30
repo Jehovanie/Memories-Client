@@ -11,7 +11,7 @@ export const getPosts = () => async (dispatch) => {
         dispatch({ type: 'FETCH_ALL', payload: data });
     } catch (error) {
 
-        console.log("ERRORFETCH_ALL : " + error.message);
+        console.log("ERROR FETCH_ALL : " + error.message);
     }
 
 }
@@ -46,5 +46,15 @@ export const delete_post = (id) => async (dispatch) => {
         dispatch({ type: 'DELETE', payload: id });
     } catch (error) {
         console.log("ERROR DELETE : " + error)
+    }
+}
+
+export const add_like_post = (id) => async (dispatch) => {
+
+    try {
+        const { data } = await api.add_like(id);
+        dispatch({ type: 'ADD_LIKE', payload: data })
+    } catch (error) {
+        console.log("ERROR ADD LIKE :" + error.message)
     }
 }
