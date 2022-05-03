@@ -16,7 +16,6 @@ const Post = ({ post, setCurrentId }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-
     return (
         <Card className={classes.card} >
             <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
