@@ -30,12 +30,17 @@ const Form = ({ currentId, setCurrentId }) => {
 
         if (currentId) {
 
-            dispatch(updatedPost(currentId, postData))
-            swal("Good Job", "Post Apdated !!!", "success")
+            if (postData.creator !== "" && postData.title !== "" && postData.message !== "") {
+
+                dispatch(updatedPost(currentId, postData))
+                swal("Good Job", "Post Apdated !!!", "success")
+            } else {
+                swal("Oops", "Please complete the form", "error")
+            }
 
         } else {
 
-            if (postData.creator !== "" || postData.title !== "" || postData.message !== "") {
+            if (postData.creator !== "" && postData.title !== "" && postData.message !== "") {
 
                 dispatch(createPost(postData));
                 swal("Good Job", "Post Added!", "success")
