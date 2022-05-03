@@ -26,5 +26,12 @@ export default makeStyles((theme) => ({
 
     btn: {
         width: '95%',
+    },
+
+    ErrorInput: {
+        display: "block",
+        color: "red",
+        fontSize: "11px",
+        width: '95%',
     }
 }))
