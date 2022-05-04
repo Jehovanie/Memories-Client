@@ -30,11 +30,11 @@ const App = () => {
             </AppBar>
             <Grow in>
                 <Container>
-                    <Grid container justifyContent="space-between" alignitem="stretch" spacing={4}>
-                        <Grid item xs={12} sm={7}>
+                    <Grid className={classes.mainResponse} container justifyContent="space-between" alignitem="stretch" spacing={2}>
+                        <Grid item xs={12} sm={7} md={8} lg={9}>
                             <Posts setCurrentId={setCurrentId} />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={5} md={4} lg={3}>
                             <Form currentId={currentId} setCurrentId={setCurrentId} />
                         </Grid>
                     </Grid>

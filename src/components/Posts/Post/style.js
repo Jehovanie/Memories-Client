@@ -41,7 +41,7 @@ export default makeStyles(() => ({
     details: {
         display: 'flex',
         justifyContent: 'space-between',
-        margin: '20px'
+        margin: '10px 20px'
     },
 
     title: {
