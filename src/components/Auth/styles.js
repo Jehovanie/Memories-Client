@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
         display: "flex",
-        flexDirections: "column",
+        flexDirection: "column",
         alignItems: "center",
         padding: theme.spacing(2)
     },
@@ -20,11 +20,12 @@ export default makeStyles((theme) => ({
     },
 
     form: {
-        width: '100%',
+        width: "100%",
         marginTop: theme.spacing(3)
     },
     submit: {
-        margin: theme.spacing(3, 0, 2)
+        margin: theme.spacing(3, 0, 2),
+        height: "50px",
     },
     googleBottom: {
         marginBottom: theme.spacing(2)
