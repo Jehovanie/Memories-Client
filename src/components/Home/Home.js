@@ -10,7 +10,9 @@ import { Container, Grow, Grid } from "@material-ui/core";
 
 const Home = () => {
     const classes = useStyle();
+
     const dispatch = useDispatch();
+
     const [currentId, setCurrentId] = useState(null);
 
     useEffect(() => {

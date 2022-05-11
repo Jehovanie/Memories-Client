@@ -12,7 +12,7 @@ import App from './App';
 import './index.css';
 
 // const store = createStore(reducer, compose(applyMiddleware(thunk)));
-const store = configureStore({ reducer: reducer })
+const store = configureStore({ reducer: reducer }) ///
 
 /** we can get all data from the store by the function getStore , or it encapsulate on the function useSeletctor() from the redux 
  * if you like see at the component Form.

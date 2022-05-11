@@ -20,7 +20,7 @@ export const createPost = (post) => async (dispatch) => {
 
     try {
 
-        const { data } = await api.createPost(post);
+        const { data } = await api.createPost(post);  ///par defaut le data est dans le res.data 
         dispatch({ type: CREATE, payload: data })
     } catch (error) {
 
