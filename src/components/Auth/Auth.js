@@ -1,23 +1,77 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Paper, Grid, Typography, Container } from "@material-ui/core"
+import { GoogleLogin, GoogleLogout } from "react-google-login"
 import useStyles from "./styles"
 import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import Input from './Input';
+import Icon from './icon';
+
 
 
 const Auth = () => {
+    //for setting up the style.
     const classes = useStyles();
+
+    //for setting up the state in redux
+    const dispatch = useDispatch();
+
+    ///for redirect
+    const navigate = useNavigate();
+
     const [isSignup, setSignUp] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
     const handleSubmit = () => { }
     const handleChange = () => { }
+
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
     const switchMode = () => setSignUp((prevIsSignUp) => !prevIsSignUp)
 
+    //id from google API
+    const google_client_id = "970466840444-mmsq4poghjuhs7lphv05t2588jjeb8og.apps.googleusercontent.com";
+
+    // const responseGoogle = (res) => {
+    //     console.log(res)
+    // }
+
+    ///when the login from the gmail is successed
+    const googleSuccess = (res) => {
+        console.log("google authentification success ...")
+        console.log(res)
+        const result = res?.profileObj;
+        const token = res?.tokenId;
+
+        try {
+
+            ///call the reducer to set the state
+            dispatch({ type: "AUTH", data: { result, token } })
+
+            //redirect to the home
+            navigate("/")
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    ///when the login with google email is faillure.
+    const googleFailure = async (error) => {
+        console.log(error)
+        console.log("Google Sign In was unsuccessful. Try Again later")
+    }
+
+
+    /**
+     * "You have created a new client application that uses libraries for user authentication or authorization that will soon be deprecated.
+     *  New clients must use the new libraries instead;
+     *  existing clients must also migrate before these libraries are deprecated. 
+     *  See the [Migration Guide](https://developers.google.com/identity/gsi/web/guides/gis-migration) for more information."
+     */
+
     return (
         <Container component="main" maxWidth="xs">
-
             <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
@@ -50,16 +104,38 @@ const Auth = () => {
                         {isSignup ? "Sign Up" : "Sign In"}
                     </Button>
 
-                    <Grid container justify="flex-end">
-                        <Grid item>
+                    {/* ------------------------- LOGIN FROM GOOGLE API ---------------------------- */}
 
+                    <GoogleLogin
+                        clientId={google_client_id}
+
+                        render={(renderProps) => (
+                            <Button className={classes.googleBottom}
+                                color="primary"
+                                fullWidth
+                                onClick={renderProps.onClick}
+                                disabled={renderProps.disabled}
+                                startIcon={<Icon />}
+                                variant="contained"
+                            >
+                                Google Sign In
+                            </Button>
+                        )}
+                        isSignedIn={true}
+                        cookiePolicy={"single_host_origin"}
+                        onSuccess={googleSuccess}
+                        onFailure={googleFailure}
+                    />
+
+                    {/* ------------------------- LOGIN FROM GOOGLE API ---------------------------- */}
+
+                    <Grid container justifyContent="flex-end">
+                        <Grid item>
                             <Button onClick={switchMode} >
                                 {isSignup ? "Already have an acount? Sign In " : "Don't have an account ? Sing Up"}
                             </Button>
                         </Grid>
-
                     </Grid>
-
                 </form>
             </Paper>
 
