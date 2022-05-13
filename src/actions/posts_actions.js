@@ -54,6 +54,7 @@ export const add_like_post = (id) => async (dispatch) => {
     try {
         const { data } = await api.add_like(id);
         dispatch({ type: ADD_LIKE, payload: data })
+
     } catch (error) {
         console.log("ERROR ADD LIKE :" + error.message)
     }
