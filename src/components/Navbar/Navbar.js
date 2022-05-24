@@ -8,8 +8,14 @@ import useStyles from './styles';
 
 const Navbar = () => {
     const classes = useStyles();
+
+    ///to act on the state.
     const dispatch = useDispatch();
+
+    ///to can define redirection.
     const navigate = useNavigate();
+
+    ///
     const location = useLocation();
 
 
@@ -22,6 +28,8 @@ const Navbar = () => {
         setUser(null)
     }
 
+
+    ///check the data and when it change this, page reffhress. 
     useEffect(() => {
         const token = user?.token;
 

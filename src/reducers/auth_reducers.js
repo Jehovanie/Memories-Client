@@ -22,9 +22,10 @@ const authReducer = (state = { authData: null }, action) => {
 
             localStorage.setItem('profile', JSON.stringify({ ...action?.data })) ////not payload because we dispatch on the Auth component
 
+            ///the data in the state add authdata : post + authdata
             return { ...state, authData: action?.data };
-
         case LOGOUT:
+            ///delete the data on the localStorage.
             localStorage.clear();
             return { ...state, authData: null }
 

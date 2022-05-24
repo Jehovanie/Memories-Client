@@ -7,8 +7,9 @@ import useStyles from "./styles"
 import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import Input from './Input';
 import Icon from './icon';
+import { signing, signup } from "../../actions/auth_action"
 
-
+const initialState = { firstname: "", lastName: "", email: "", passsword: "", confirmPassword: "" };
 
 const Auth = () => {
     //for setting up the style.
@@ -18,16 +19,34 @@ const Auth = () => {
     const dispatch = useDispatch();
 
     ///for redirect
-    const navigate = useNavigate();
+    const navigate = useNavigate(); /// alternative of the history.
 
     const [isSignup, setSignUp] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
 
-    /// when the form is submit
-    const handleSubmit = () => { }
+    const [formData, setFormData] = useState(initialState);
 
-    const handleChange = () => { }
+    /// when the form is submit
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData)
+
+        if (isSignup) {
+            dispatch(signup(formData, navigate))
+        } else {
+            dispatch(signing(formData, navigate))
+        }
+    }
+
+    const handleChange = (e) => {
+        /**
+         * DYNAMIC :
+         * On the input : the e.target.name is the name of the property , and the e.target.value is the value of this.
+         */
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+
+    }
 
     /// manage state display of the  password : show or hide.
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
@@ -45,7 +64,7 @@ const Auth = () => {
     ///when the login from the gmail is successed
     const googleSuccess = (res) => {
         console.log("google authentification success ...")
-        console.log(res)
+
         const result = res?.profileObj;
         const token = res?.tokenId;
 
