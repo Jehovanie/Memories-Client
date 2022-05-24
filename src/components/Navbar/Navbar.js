@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from "react-router-dom"
-import memories from "../../images/memorise.jpg";
+import memories from "../../_assets/images/memorise.jpg";
 import { Avatar, AppBar, Button, Typography, Toolbar } from "@material-ui/core";
 import useStyles from './styles';
 

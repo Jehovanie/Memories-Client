@@ -23,10 +23,16 @@ const Auth = () => {
     const [isSignup, setSignUp] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
+
+    /// when the form is submit
     const handleSubmit = () => { }
+
     const handleChange = () => { }
 
+    /// manage state display of the  password : show or hide.
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
+
+    /// manage state of one user : create new of alraidy exist.
     const switchMode = () => setSignUp((prevIsSignUp) => !prevIsSignUp)
 
     //id from google API
@@ -73,9 +79,11 @@ const Auth = () => {
     return (
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
+
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
+
                 <Typography variant="h5">
                     {isSignup ? "Sign Up" : "Sign In"}
                 </Typography>
@@ -104,7 +112,7 @@ const Auth = () => {
                         {isSignup ? "Sign Up" : "Sign In"}
                     </Button>
 
-                    {/* ------------------------- LOGIN FROM GOOGLE API ---------------------------- */}
+                    {/* ------------------------- SECTION LOGIN FROM GOOGLE API ---------------------------- */}
 
                     <GoogleLogin
                         clientId={google_client_id}
@@ -127,7 +135,7 @@ const Auth = () => {
                         onFailure={googleFailure}
                     />
 
-                    {/* ------------------------- LOGIN FROM GOOGLE API ---------------------------- */}
+                    {/* ------------------------- END OF THE SECTION  LOGIN FROM GOOGLE API ---------------------------- */}
 
                     <Grid container justifyContent="flex-end">
                         <Grid item>
