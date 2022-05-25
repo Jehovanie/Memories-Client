@@ -5,6 +5,16 @@ import axios from 'axios';
 
 const API = axios.create({ baseURL: "http://localhost:5000" })
 
+API.interceptors.request.use((req) => {
+
+    if(localStorage.getItem('profile')){
+
+        ///setting the header to put the all data like:
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token}`;
+    }
+    return req;
+})
+
 
 
 ///this return all post via the back end

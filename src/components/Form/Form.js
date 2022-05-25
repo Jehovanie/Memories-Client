@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useLocation } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatedPost } from '../../actions/posts_actions'
 import FileBase from "react-file-base64";
@@ -12,27 +12,30 @@ import swal from "sweetalert";
 const Form = ({ currentId, setCurrentId }) => {
 
     const classes = useStyles();
-    const [postData, setPostData] = useState({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+    const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
     const dispatch = useDispatch();
 
+    const location = useLocation()
 
-    const [focus, setFocus] = useState({ creator: false, title: '', message: false, tags: false, selectedFile: false });
+    const [focus, setFocus] = useState({ title: '', message: false, tags: false, selectedFile: false });
 
 
     const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null) // get the current post to update 
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     useEffect(() => {
         if (post) setPostData(post)
-    }, [post])
+    }, [post , location])
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (currentId) {
 
-            if (postData.creator !== "" && postData.title !== "" && postData.message !== "") {
+            if (postData.title !== "" && postData.message !== "") {
 
-                dispatch(updatedPost(currentId, postData))
+                dispatch(updatedPost(currentId, { ...postData , name: user?.result?.name }))
                 swal("Good Job", "Post Apdated !!!", "success")
             } else {
                 swal("Oops", "Please complete the form", "error")
@@ -40,9 +43,9 @@ const Form = ({ currentId, setCurrentId }) => {
 
         } else {
 
-            if (postData.creator !== "" && postData.title !== "" && postData.message !== "") {
+            if ( postData.title !== "" && postData.message !== "") {
 
-                dispatch(createPost(postData));
+                dispatch(createPost({ ...postData , name: user?.result?.name }));
                 swal("Good Job", "Post Added!", "success")
             } else {
                 swal("Oops", "Please complete the form", "error")
@@ -51,11 +54,24 @@ const Form = ({ currentId, setCurrentId }) => {
         clear();
     }
 
+
     const clear = () => {
         setCurrentId(null);
-        setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
-        setFocus({ creator: false, title: false, message: false });
+        setPostData({  title: '', message: '', tags: '', selectedFile: '' });
+        setFocus({ title: false, message: false });
 
+    }
+
+
+    if( !user?.result?.name ){
+
+        return (
+            <Paper className= {classes.paper } >
+                <Typography variant="h6" align="center">
+                    Please Sign In to create your own memories and like other's memories. 
+                </Typography>
+            </Paper>
+        )
     }
 
 
@@ -63,19 +79,6 @@ const Form = ({ currentId, setCurrentId }) => {
         <Paper className={classes.paper}>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6">{currentId ? "Editing" : "Creating"} a Memory</Typography>
-                <TextField
-                    name="creator"
-                    variant="outlined"
-                    label="Creator"
-                    fullWidth
-                    value={postData.creator}
-                    onChange={(e) => setPostData({ ...postData, creator: e.target.value })}
-                    onFocus={() => setFocus({ ...focus, creator: true })}
-                />
-
-                {/* <div className={classes.ErrorInput}  >ERROR : this is must be requered !</div> */}
-                {focus.creator && postData.creator === "" && <div className={classes.ErrorInput} style={{ display: "block" }}>This can't be empty !</div>}
-
                 <TextField
                     name="title"
                     variant="outlined"
