@@ -9,7 +9,7 @@ import Input from './Input';
 import Icon from './icon';
 import { signing, signup } from "../../actions/auth_action"
 
-const initialState = { firstname: "", lastName: "", email: "", passsword: "", confirmPassword: "" };
+const initialState = { firstname: "", lastName: "", email: "", password: "", confirmPassword: "" };
 
 const Auth = () => {
     //for setting up the style.

@@ -21,7 +21,7 @@ export const createPost = (post) => async (dispatch) => {
     try {
 
         const { data } = await api.createPost(post);  ///par defaut le data est dans le res.data 
-        dispatch({ type: CREATE, payload: data })
+        dispatch({ type: CREATE, payload: data })  ///call the reducer to change the state.
     } catch (error) {
 
         console.log("ERROR CREATE: " + error.message);
