@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import useStyles from './style';
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@material-ui/core";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
@@ -15,8 +15,12 @@ const Post = ({ post, setCurrentId }) => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
+    const location = useLocation();
     const user = JSON.parse(localStorage.getItem('profile'));
 
+    useEffect(() => { 
+        /// i use this to change the status of the post when user is logout.
+    } , [location])
 
     return (
         <Card className={classes.card} >

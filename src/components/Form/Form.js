@@ -5,7 +5,7 @@ import { createPost, updatedPost } from '../../actions/posts_actions'
 import FileBase from "react-file-base64";
 
 import useStyles from './style';
-import { TextField, Button, Typography, Paper } from '@material-ui/core';
+import { TextField, Button, Typography, Paper} from '@material-ui/core';
 
 import swal from "sweetalert";
 
