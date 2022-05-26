@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Paper, Grid, Typography, Container } from "@material-ui/core"
-import { GoogleLogin, GoogleLogout } from "react-google-login"
+import { GoogleLogin } from "react-google-login"
 import useStyles from "./styles"
 import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import Input from './Input';
@@ -61,6 +61,7 @@ const Auth = () => {
     //     console.log(res)
     // }
 
+
     ///when the login from the gmail is successed
     const googleSuccess = (res) => {
         console.log("google authentification success ...")
@@ -86,7 +87,6 @@ const Auth = () => {
         console.log(error)
         console.log("Google Sign In was unsuccessful. Try Again later")
     }
-
 
     /**
      * "You have created a new client application that uses libraries for user authentication or authorization that will soon be deprecated.
@@ -133,9 +133,10 @@ const Auth = () => {
 
                     {/* ------------------------- SECTION LOGIN FROM GOOGLE API ---------------------------- */}
 
+
                     <GoogleLogin
                         clientId={google_client_id}
-
+                        plugin_name="text"
                         render={(renderProps) => (
                             <Button className={classes.googleBottom}
                                 color="primary"
@@ -153,7 +154,6 @@ const Auth = () => {
                         onSuccess={googleSuccess}
                         onFailure={googleFailure}
                     />
-
                     {/* ------------------------- END OF THE SECTION  LOGIN FROM GOOGLE API ---------------------------- */}
 
                     <Grid container justifyContent="flex-end">

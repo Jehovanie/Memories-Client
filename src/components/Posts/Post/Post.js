@@ -8,6 +8,7 @@ import MoreHorizonIcon from '@material-ui/icons/MoreHoriz';
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { delete_post, add_like_post } from "../../../actions/posts_actions";
+import { ThumbUpAltOutlined } from "@material-ui/icons";
 
 
 
@@ -21,6 +22,19 @@ const Post = ({ post, setCurrentId }) => {
     useEffect(() => { 
         /// i use this to change the status of the post when user is logout.
     } , [location])
+
+    const Likes = () => {
+        if ( post.likes.length > 0 ) {
+            return post.likes.find( (like) => like === (user?.result?.googleId || user?.result?._id ))
+            ? 
+            ( <> <ThumbUpAltIcon fontSize="small" />  &nbsp; { post.likes.length > 2 ?  `You and ${ post.likes.length -1 } other persons.` : `${post.likes.length} Like${ post.likes.length > 1 ? "s" : "" }`}  </>)
+            :
+            ( <> <ThumbUpAltOutlined fontSize="small" /> &nbsp; { post.likes.length } {post.likes.length === 1 ? "Like" : "Likes"}  </>) ;
+        }
+        return <> <ThumbUpAltOutlined fontSize="small"/> &nbsp; Like </>
+    }
+
+  
 
     return (
         <Card className={classes.card} >
@@ -46,20 +60,13 @@ const Post = ({ post, setCurrentId }) => {
                 </Typography>
             </CardContent>
             <CardActions className={classes.cardAction}>
-                <Button size="small" color="primary" onClick={() => dispatch(add_like_post(post._id))}>
-                    <ThumbUpAltIcon fontSize="small" />
-                    &nbsp;
-                    { user?.result?.name && "Like" }
-                     &nbsp; {post.likes.length}
+                <Button size="small" color="primary" disabled={!user?.result } onClick={() => dispatch(add_like_post(post._id))}>
+                   <Likes />
                 </Button>
-                {
-                    user?.result?.name
-                    &&
-                    <Button size="small" color="primary" onClick={() => dispatch(delete_post(post._id))}>
+                <Button size="small" color="primary" disabled={!user?.result } onClick={() => dispatch(delete_post(post._id))}>
                     <DeleteIcon fontSize="small" /> &nbsp;
                         Delete
-                    </Button>
-                }
+                </Button>
             </CardActions>
         </Card >
 

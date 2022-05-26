@@ -96,6 +96,8 @@ const Form = ({ currentId, setCurrentId }) => {
                     variant="outlined"
                     label="Message"
                     fullWidth
+                    multiline
+                    rows={3}
                     value={postData.message}
                     onChange={(e) => setPostData({ ...postData, message: e.target.value })}
                     onFocus={() => setFocus({ ...focus, message: true })}
