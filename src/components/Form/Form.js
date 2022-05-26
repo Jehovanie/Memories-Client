@@ -1,4 +1,5 @@
-import React, { useState, useEffect , useLocation } from 'react';
+import React, { useState, useEffect  } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatedPost } from '../../actions/posts_actions'
 import FileBase from "react-file-base64";
