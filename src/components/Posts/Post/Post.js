@@ -15,6 +15,8 @@ const Post = ({ post, setCurrentId }) => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem('profile'));
+
 
     return (
         <Card className={classes.card} >
@@ -42,12 +44,18 @@ const Post = ({ post, setCurrentId }) => {
             <CardActions className={classes.cardAction}>
                 <Button size="small" color="primary" onClick={() => dispatch(add_like_post(post._id))}>
                     <ThumbUpAltIcon fontSize="small" />
-                    &nbsp; Like  &nbsp; {post.likes.length}
+                    &nbsp;
+                    { user?.result?.name && "Like" }
+                     &nbsp; {post.likes.length}
                 </Button>
-                <Button size="small" color="primary" onClick={() => dispatch(delete_post(post._id))}>
+                {
+                    user?.result?.name
+                    &&
+                    <Button size="small" color="primary" onClick={() => dispatch(delete_post(post._id))}>
                     <DeleteIcon fontSize="small" /> &nbsp;
-                    Delete
-                </Button>
+                        Delete
+                    </Button>
+                }
             </CardActions>
         </Card >
 
