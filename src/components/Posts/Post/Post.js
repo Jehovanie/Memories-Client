@@ -19,22 +19,21 @@ const Post = ({ post, setCurrentId }) => {
     const location = useLocation();
     const user = JSON.parse(localStorage.getItem('profile'));
 
-    useEffect(() => { 
+    useEffect(() => {
         /// i use this to change the status of the post when user is logout.
-    } , [location])
+    }, [location])
 
     const Likes = () => {
-        if ( post.likes.length > 0 ) {
-            return post.likes.find( (like) => like === (user?.result?.googleId || user?.result?._id ))
-            ? 
-            ( <> <ThumbUpAltIcon fontSize="small" />  &nbsp; { post.likes.length > 2 ?  `You and ${ post.likes.length -1 } other persons.` : `${post.likes.length} Like${ post.likes.length > 1 ? "s" : "" }`}  </>)
-            :
-            ( <> <ThumbUpAltOutlined fontSize="small" /> &nbsp; { post.likes.length } {post.likes.length === 1 ? "Like" : "Likes"}  </>) ;
+        if (post.likes.length > 0) {
+            return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+                ?
+                (<> <ThumbUpAltIcon fontSize="small" />  &nbsp; {post.likes.length > 2 ? `You and ${post.likes.length - 1} other persons.` : `${post.likes.length} Like${post.likes.length > 1 ? "s" : ""}`}  </>)
+                :
+                (<> <ThumbUpAltOutlined fontSize="small" /> &nbsp; {post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}  </>);
         }
-        return <> <ThumbUpAltOutlined fontSize="small"/> &nbsp; Like </>
+        return <> <ThumbUpAltOutlined fontSize="small" /> &nbsp; Like </>
     }
 
-  
 
     return (
         <Card className={classes.card} >
@@ -43,11 +42,16 @@ const Post = ({ post, setCurrentId }) => {
                 <Typography variant="h6">{post.name}</Typography>
                 <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
-            <div className={classes.overlay2}>
-                <Button style={{ color: "white" }} size="small" onClick={() => setCurrentId(post._id)}>
-                    <MoreHorizonIcon fontSize="medium" />
-                </Button>
-            </div>
+
+            {/** dont allow the other to edit post only the creator can change. */}
+            {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+
+                <div className={classes.overlay2}>
+                    <Button style={{ color: "white" }} size="small" onClick={() => setCurrentId(post._id)}>
+                        <MoreHorizonIcon fontSize="medium" />
+                    </Button>
+                </div>
+            )}
             <div className={classes.details}>
                 <Typography variant="body2" color="textSecondary">
                     {post.tags.map((tag) => `#${tag} `)}
@@ -60,13 +64,18 @@ const Post = ({ post, setCurrentId }) => {
                 </Typography>
             </CardContent>
             <CardActions className={classes.cardAction}>
-                <Button size="small" color="primary" disabled={!user?.result } onClick={() => dispatch(add_like_post(post._id))}>
-                   <Likes />
+                <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(add_like_post(post._id))}>
+                    <Likes />
                 </Button>
-                <Button size="small" color="primary" disabled={!user?.result } onClick={() => dispatch(delete_post(post._id))}>
-                    <DeleteIcon fontSize="small" /> &nbsp;
+
+                {/** dont allow the other to edit post only the creator can delete. */}
+                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+
+                    <Button size="small" color="primary" onClick={() => dispatch(delete_post(post._id))}>
+                        <DeleteIcon fontSize="small" /> &nbsp;
                         Delete
-                </Button>
+                    </Button>
+                )}
             </CardActions>
         </Card >
 
