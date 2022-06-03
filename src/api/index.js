@@ -7,7 +7,7 @@ const API = axios.create({ baseURL: "http://localhost:5000" })
 
 API.interceptors.request.use((req) => {
 
-    if(localStorage.getItem('profile')){
+    if (localStorage.getItem('profile')) {
 
         ///setting the header to put the all data like:
         req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token}`;
@@ -19,6 +19,9 @@ API.interceptors.request.use((req) => {
 
 ///this return all post via the back end
 export const fetchPosts = () => API.get("/posts");
+
+///get post from back by the param/query
+export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`)
 
 ///this add newPost to the back end and return all post
 export const createPost = (newPost) => API.post("/posts", newPost);
