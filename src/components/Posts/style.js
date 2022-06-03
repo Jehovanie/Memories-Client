@@ -11,5 +11,17 @@ export default makeStyles((theme) => ({
     },
     actionDiv: {
         textAlign: 'center'
-    }
+    },
+    cardError: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: '15px',
+        height: '50%',
+        width: '350px',
+        color: 'red',
+        margin: 'auto'
+
+    },
 }))

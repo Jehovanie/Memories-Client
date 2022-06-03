@@ -11,6 +11,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import ChipInput from "material-ui-chip-input";
 
+import swal from "sweetalert";
+
+
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
@@ -38,15 +41,21 @@ const Home = () => {
     const [search, setSearch] = useState('');
     const [tags, setTags] = useState([]);
 
-    ///action for int the 
+    ///action for int the tags
     const handleAdd = (tagToAdd) => setTags([...tags, tagToAdd])
     const handleDelete = (tagToDelete) => setTags(tags.filter((tag) => tag !== tagToDelete))
 
     ///dispatch the search by element.
     const searchPost = () => {
 
+        ///when the input is valid
         if (search.trim() || tags) {
-            dispatch(getPostBySearch({ search, tags: tags.join(',') }))
+            if ((search.trim() && search !== "") || (tags && tags.length !== 0)) {
+                dispatch(getPostBySearch({ search, tags: tags.join(',') }))
+
+            } else {
+                swal("Oops", "Recherche Invalid ...", "error")
+            }
         } else {
             navigate("/")
         }

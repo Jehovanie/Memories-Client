@@ -6,18 +6,13 @@ const reducer = (posts = [], action) => {
     switch (action.type) {
 
         case FETCH_ALL:
-            console.log(action.payload)
             return action.payload;
 
         case FETCH_BY_SEARCH:
-            console.log(action.payload)
             return action.payload;
 
         case CREATE:
             return [...posts, action.payload];
-
-        default:
-            return posts;
 
         case UPDATE:
         case ADD_LIKE:
@@ -25,6 +20,9 @@ const reducer = (posts = [], action) => {
 
         case DELETE:
             return posts.filter((post) => post._id !== action.payload);
+
+        default:
+            return posts;
     }
 }
 
