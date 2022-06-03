@@ -16,54 +16,51 @@ function useQuery() {
 }
 
 const Home = () => {
+
+    /// to get class style
     const classes = useStyle();
 
+    ///to dispatch an action
     const dispatch = useDispatch();
 
+    ///we need it to set the updatePost
     const [currentId, setCurrentId] = useState(null);
-
-
-    const query = useQuery();
-    const navigate = useNavigate();
-
-    const page = query.get('page') || 1;
-
-    const searchQuery = query.get('searchQuery');
-    const [search, setSearch] = useState('');
-    const [tags, setTags] = useState([]);
-
-
 
     useEffect(() => {
         dispatch(getPosts())
+
     }, [currentId, dispatch]) ///the effect does not execute if none of its variables change.
 
+    ///to redirect anywhere
+    const navigate = useNavigate();
 
-    const handlePressKey = (e) => {
+    ///for form to search and tags.
+    const [search, setSearch] = useState('');
+    const [tags, setTags] = useState([]);
 
-        if (e.keyCode === 13) {
-            searchPost();
-        }
-    }
+    ///action for int the 
+    const handleAdd = (tagToAdd) => setTags([...tags, tagToAdd])
+    const handleDelete = (tagToDelete) => setTags(tags.filter((tag) => tag !== tagToDelete))
 
-
-    const handleAdd = (tagToAdd) => {
-        setTags([...tags, tagToAdd])
-    }
-    const handleDelete = (tagToDelete) => {
-        setTags(tags.filter((tag) => tag !== tagToDelete))
-    }
-
-
+    ///dispatch the search by element.
     const searchPost = () => {
+
         if (search.trim() || tags) {
-            /// dispatch ->fetch search post
             dispatch(getPostBySearch({ search, tags: tags.join(',') }))
         } else {
             navigate("/")
         }
     }
 
+    const handlePressKey = (e) => {
+        if (e.keyCode === 13) { ///e.keyCode : is the code of text input by the user.
+            searchPost();
+        }
+    }
+
+    const query = useQuery();
+    const page = query.get('page') || 1;
+    const searchQuery = query.get('searchQuery');
 
     return (
         <Grow in>
@@ -82,29 +79,30 @@ const Home = () => {
                     <Grid item xs={12} sm={6} md={3} lg={3}>
                         <AppBar className={classes.appBarSearch} position="static" color="inherit">
 
-                            <TextField name="search"
+                            <TextField
+                                name="search"
                                 variant="outlined"
                                 label="Search Memories"
-                                onKeyUp={handlePressKey}
+                                onKeyUp={handlePressKey /** onKeyUp : when user releases a key */}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
 
                             <ChipInput
                                 style={{ margin: "10px 0" }}
+                                variant="outlined"
+                                label="Search Tags"
                                 name="tags"
                                 value={tags}
                                 onAdd={handleAdd}
                                 onDelete={handleDelete}
-                                variant="outlined"
-                                label="Search Tags"
                             />
 
                             <Button
-                                onClick={searchPost}
                                 className={classes.searchButton}
                                 color="primary"
                                 variant="contained"
+                                onClick={searchPost}
                             >
                                 Search
 
