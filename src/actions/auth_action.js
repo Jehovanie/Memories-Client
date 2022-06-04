@@ -7,10 +7,19 @@ export const signing = (formData, navigate) => async (dispatch) => {
     try {
         //log in the user
         const { data } = await api.signIn(formData);
+
+        ///send the action
         dispatch({ type: AUTH, data })
         navigate("/")
     } catch (error) {
-        console.log(error.message)
+
+        const { data } = error.response;
+
+        ///send the action
+        dispatch({ type: AUTH, data })
+
+        //don't move the user.. 
+        navigate("/auth")
     }
 }
 

@@ -20,7 +20,10 @@ const authReducer = (state = { authData: null }, action) => {
              * we must convert it to a JSON string using JSON.stringify()
              */
 
-            localStorage.setItem('profile', JSON.stringify({ ...action?.data })) ////not payload because we dispatch on the Auth component
+            ///only we get the token from the back....
+            if (action?.data?.token) {
+                localStorage.setItem('profile', JSON.stringify({ ...action?.data })) ////not payload because we dispatch on the Auth component
+            }
 
             ///the data in the state add authdata : post + authdata
             return { ...state, authData: action?.data };

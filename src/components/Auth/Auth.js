@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useStore } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Paper, Grid, Typography, Container } from "@material-ui/core"
 import { GoogleLogin } from "react-google-login"
@@ -8,23 +8,38 @@ import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import Input from './Input';
 import Icon from './icon';
 import { signing, signup } from "../../actions/auth_action"
+import swal from 'sweetalert';
 
 const initialState = { firstname: "", lastName: "", email: "", password: "", confirmPassword: "" };
 
 const Auth = () => {
-    //for setting up the style.
-    const classes = useStyles();
+
+    const dataUser = useStore((state) => state.auth)
 
     //for setting up the state in redux
     const dispatch = useDispatch();
 
+    if (dataUser.getState().auth.authData) {
+
+        const message = dataUser.getState().auth.authData?.message
+
+        dispatch({ type: 'AUTH' })
+        swal("Oops", message, "error")
+    }
+
+
+
+    //for setting up the style.
+    const classes = useStyles();
+
+
+
     ///for redirect
     const navigate = useNavigate(); /// alternative of the history.
 
+    ///setting for the form singup or signin
     const [isSignup, setSignUp] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
-
-
     const [formData, setFormData] = useState(initialState);
 
     /// when the form is submit
