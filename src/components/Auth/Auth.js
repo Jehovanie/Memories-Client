@@ -23,7 +23,7 @@ const Auth = () => {
 
         const message = dataUser.getState().auth.authData?.message
 
-        dispatch({ type: 'AUTH' })
+        dispatch({ type: 'AUTH', authData: null })
         swal("Oops", message, "error")
     }
 
@@ -45,7 +45,6 @@ const Auth = () => {
     /// when the form is submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
 
         if (isSignup) {
             dispatch(signup(formData, navigate))

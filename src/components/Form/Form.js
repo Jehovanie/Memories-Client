@@ -1,11 +1,11 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatedPost } from '../../actions/posts_actions'
 import FileBase from "react-file-base64";
 
 import useStyles from './style';
-import { TextField, Button, Typography, Paper} from '@material-ui/core';
+import { TextField, Button, Typography, Paper } from '@material-ui/core';
 
 import swal from "sweetalert";
 
@@ -27,7 +27,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
     useEffect(() => {
         if (post) setPostData(post)
-    }, [post , location])
+    }, [post, location])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
             if (postData.title !== "" && postData.message !== "") {
 
-                dispatch(updatedPost(currentId, { ...postData , name: user?.result?.name }))
+                dispatch(updatedPost(currentId, { ...postData, name: user?.result?.name }))
                 swal("Good Job", "Post Apdated !!!", "success")
             } else {
                 swal("Oops", "Please complete the form", "error")
@@ -44,9 +44,9 @@ const Form = ({ currentId, setCurrentId }) => {
 
         } else {
 
-            if ( postData.title !== "" && postData.message !== "") {
+            if (postData.title !== "" && postData.message !== "") {
 
-                dispatch(createPost({ ...postData , name: user?.result?.name }));
+                dispatch(createPost({ ...postData, name: user?.result?.name }));
                 swal("Good Job", "Post Added!", "success")
             } else {
                 swal("Oops", "Please complete the form", "error")
@@ -58,18 +58,18 @@ const Form = ({ currentId, setCurrentId }) => {
 
     const clear = () => {
         setCurrentId(null);
-        setPostData({  title: '', message: '', tags: '', selectedFile: '' });
+        setPostData({ title: '', message: '', tags: '', selectedFile: '' });
         setFocus({ title: false, message: false });
 
     }
 
 
-    if( !user?.result?.name ){
+    if (!user?.result?.name) {
 
         return (
-            <Paper className= {classes.paper } >
+            <Paper className={classes.paper} >
                 <Typography variant="h6" align="center">
-                    Please Sign In to create your own memories and like other's memories. 
+                    Please Sign In to create your own memories and like other's memories.
                 </Typography>
             </Paper>
         )
@@ -97,7 +97,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     label="Message"
                     fullWidth
                     multiline
-                    rows={3}
+                    minRows={3}
                     value={postData.message}
                     onChange={(e) => setPostData({ ...postData, message: e.target.value })}
                     onFocus={() => setFocus({ ...focus, message: true })}

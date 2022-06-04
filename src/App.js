@@ -10,7 +10,6 @@ import PostDetails from './components/PostDetails/PostDetails';
 const App = () => {
 
     const user = JSON.parse(localStorage.getItem("profile"));
-
     return (
         <BrowserRouter>
             <Container maxWidth="lg">
@@ -20,7 +19,7 @@ const App = () => {
                     <Route path="/posts" element={<Home />} />
                     <Route path="/posts/search" element={<Home />} />
                     <Route path="/posts/:id" element={<PostDetails />} />
-                    <Route path="/auth" element={(!user && <Auth />) || (<Navigate to="/posts" replace />)} />
+                    <Route path="/auth" element={(!user && <Auth />) || (<Navigate to="/" replace />)} />
                 </Routes>
             </Container>
         </BrowserRouter>
