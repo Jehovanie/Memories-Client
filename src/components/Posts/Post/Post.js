@@ -78,7 +78,6 @@ const Post = ({ post, setCurrentId }) => {
                 )}
             </CardActions>
         </Card >
-
     )
 }
 

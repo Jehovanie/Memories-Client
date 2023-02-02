@@ -1,6 +1,11 @@
 import { FETCH_ALL, DELETE, CREATE, UPDATE, ADD_LIKE, FETCH_BY_SEARCH } from "../constants/actionType";
 import * as api from "../api";
 
+/**
+ * Each function return a function that is an action
+ * to change the global state after modify or update a collection in database.
+ */
+
 // Action Creators
 export const getPosts = () => async (dispatch) => {
 
@@ -33,11 +38,12 @@ export const getPostBySearch = (searchQuery) => async (dispatch) => {
 export const createPost = (post) => async (dispatch) => {
 
     try {
+        ///par defaut le data est dans le res.data 
+        const { data } = await api.createPost(post);
 
-        const { data } = await api.createPost(post);  ///par defaut le data est dans le res.data 
-        dispatch({ type: CREATE, payload: data })  ///call the reducer to change the state.
+        ///call the reducer to change the state.
+        dispatch({ type: CREATE, payload: data });
     } catch (error) {
-
         console.log("ERROR CREATE: " + error.message);
     }
 }
@@ -45,7 +51,6 @@ export const createPost = (post) => async (dispatch) => {
 export const updatedPost = (id, post) => async (dispatch) => {
 
     try {
-
         const { data } = await api.updatedPost(id, post);
         dispatch({ type: UPDATE, payload: data })
     } catch (error) {

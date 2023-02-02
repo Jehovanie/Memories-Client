@@ -6,7 +6,7 @@ const authReducer = (state = { authData: null }, action) => {
 
         case AUTH:
             /**
-             * -------------------LOCALSTORAGE -----------------------------------------
+             * -------------------LOCAL STORAGE -----------------------------------------
              * The code above is the simplest implementation of the form inputs in React. 
              * By using the useState React Hook to control the component, 
              * we keep the input state up to date on every keystroke, as seen above.

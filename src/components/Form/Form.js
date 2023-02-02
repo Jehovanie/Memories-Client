@@ -7,21 +7,26 @@ import FileBase from "react-file-base64";
 import useStyles from './style';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 
+///customise message alert
 import swal from "sweetalert";
 
 
 const Form = ({ currentId, setCurrentId }) => {
 
+
     const classes = useStyles();
+
+    ///new data to create
     const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
+    /// to dispatch action creat post
     const dispatch = useDispatch();
 
     const location = useLocation()
 
     const [focus, setFocus] = useState({ title: '', message: false, tags: false, selectedFile: false });
 
-
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null) // get the current post to update 
+    // get the current post to update 
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null)
 
     const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -46,6 +51,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
             if (postData.title !== "" && postData.message !== "") {
 
+                ///
                 dispatch(createPost({ ...postData, name: user?.result?.name }));
                 swal("Good Job", "Post Added!", "success")
             } else {
@@ -64,6 +70,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
 
+    /// chech and cancel if not user is connected.
     if (!user?.result?.name) {
 
         return (
@@ -89,6 +96,8 @@ const Form = ({ currentId, setCurrentId }) => {
                     onChange={(e) => setPostData({ ...postData, title: e.target.value })}
                     onFocus={() => setFocus({ ...focus, title: true })}
                 />
+
+                {/* display an instruction for user */}
                 {focus.title && postData.title === "" && <div className={classes.ErrorInput} style={{ display: "block" }}>This can't be empty !</div>}
 
                 <TextField
@@ -102,6 +111,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     onChange={(e) => setPostData({ ...postData, message: e.target.value })}
                     onFocus={() => setFocus({ ...focus, message: true })}
                 />
+                {/* display an instruction for user */}
                 {focus.message && postData.message === "" && <div className={classes.ErrorInput} style={{ display: "block" }}>This can't be empty !</div>}
 
                 <TextField
