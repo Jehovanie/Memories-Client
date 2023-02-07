@@ -11,7 +11,6 @@ import { delete_post, add_like_post } from "../../../actions/posts_actions";
 import { ThumbUpAltOutlined } from "@material-ui/icons";
 
 
-
 const Post = ({ post, setCurrentId }) => {
 
     const classes = useStyles();
@@ -36,7 +35,7 @@ const Post = ({ post, setCurrentId }) => {
 
 
     return (
-        <Card className={classes.card} >
+        <Card className={classes.card} raised elevation={6} >
             <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
             <div className={classes.overlay}>
                 <Typography variant="h6">{post.name}</Typography>
@@ -60,7 +59,7 @@ const Post = ({ post, setCurrentId }) => {
             <Typography className={classes.title} variant="h5" gutterBottom>{post.title}</Typography>
             <CardContent>
                 <Typography variant="body2" component="p" color="textSecondary">
-                    {post.message}
+                    {(post.message.length > 150) ? post.message.substr(0, 150) + "...lire la suite" : post.message}
                 </Typography>
             </CardContent>
             <CardActions className={classes.cardAction}>

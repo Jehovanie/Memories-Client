@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from "react-router-dom"
+
 import memories from "../../_assets/images/memorise.jpg";
+
 import { Avatar, AppBar, Button, Typography, Toolbar } from "@material-ui/core";
+
 import decode from "jwt-decode";
 import useStyles from './styles';
 
@@ -35,9 +38,9 @@ const Navbar = () => {
         const token = user?.token;
 
         //check if token is expired
-        if( token ){
+        if (token) {
             const decodedToken = decode(token)
-            if ( decodedToken.exp * 1000 < new Date().getTime())
+            if (decodedToken.exp * 1000 < new Date().getTime())
                 logout();
         }
 
@@ -46,10 +49,10 @@ const Navbar = () => {
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
-            <div className={classes.brandContainer}>
-                <Typography component={Link} to="/" className={classes.heading} variant="h3" align="center">Memories</Typography>
+            <Link to="/" className={classes.brandContainer}>
+                <Typography className={classes.heading} variant="h3" align="center">Memories</Typography>
                 <img className={classes.image} src={memories} alt="Memories" width="60" align="center" />
-            </div>
+            </Link>
             <Toolbar className={classes.toolbar} >
                 {user ? (
                     <div className={classes.profile}>

@@ -30,10 +30,6 @@ const Home = () => {
     ///we need it to set the updatePost
     const [currentId, setCurrentId] = useState(null);
 
-    useEffect(() => {
-        dispatch(getPosts())
-
-    }, [currentId, dispatch]) ///the effect does not execute if none of its variables change.
 
     ///to redirect anywhere
     const navigate = useNavigate();
@@ -54,6 +50,8 @@ const Home = () => {
             if ((search.trim() && search !== "") || (tags && tags.length !== 0)) {
                 dispatch(getPostBySearch({ search, tags: tags.join(',') }))
 
+                //redirect, change url
+                navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`)
             } else {
                 swal("Oops", "Recherche Invalid ...", "error")
             }
@@ -93,7 +91,7 @@ const Home = () => {
                                 name="search"
                                 variant="outlined"
                                 label="Search Memories"
-                                onKeyUp={handlePressKey /** onKeyUp : when user releases a key */}
+                                onKeyUp={handlePressKey} /** onKeyUp : when user releases a key */
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
@@ -122,8 +120,9 @@ const Home = () => {
 
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
 
+                        {/* pagination  */}
                         <Paper className={classes.pagination} elevation={6}>
-                            <Pagination />
+                            <Pagination page={page} />
                         </Paper>
                     </Grid>
                 </Grid>

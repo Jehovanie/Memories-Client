@@ -26,7 +26,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const [focus, setFocus] = useState({ title: '', message: false, tags: false, selectedFile: false });
 
     // get the current post to update 
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null)
+    const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId) : null)
 
     const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -84,7 +84,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6">{currentId ? "Editing" : "Creating"} a Memory</Typography>
                 <TextField

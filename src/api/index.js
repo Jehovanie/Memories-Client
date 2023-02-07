@@ -18,7 +18,7 @@ API.interceptors.request.use((req) => {
 
 
 ///this return all post via the back end
-export const fetchPosts = () => API.get("/posts");
+export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
 
 ///get post from back by the param/query
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`)
@@ -29,7 +29,7 @@ export const createPost = (newPost) => API.post("/posts", newPost);
 ///this use to update the post already exist
 export const updatedPost = (id, post_updated) => API.patch(`/posts/${id}`, post_updated)
 
-///to delete one post
+///to delete one post 
 export const deletedPost = (id) => API.delete(`/posts/${id}`);
 
 ///like updata but just the champ like to add.
