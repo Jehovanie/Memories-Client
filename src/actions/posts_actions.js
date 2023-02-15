@@ -1,4 +1,4 @@
-import { FETCH_ALL, DELETE, CREATE, UPDATE, ADD_LIKE, FETCH_BY_SEARCH, START_LOADING, END_LOADING } from "../constants/actionType";
+import { FETCH_ALL, DELETE, CREATE, UPDATE, ADD_LIKE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, FETCH_POST } from "../constants/actionType";
 import * as api from "../api";
 
 /**
@@ -7,6 +7,27 @@ import * as api from "../api";
  */
 
 // Action Creators
+
+export const getPost = (id) => async (dispatch) => {
+
+    // const action = { type: 'FETCH_ALL', payload: [] }
+    try {
+        dispatch({ type: START_LOADING })
+
+        const { data } = await api.fetchPost(id);
+
+        dispatch({ type: FETCH_POST, payload: data });
+
+        dispatch({ type: END_LOADING })
+    } catch (error) {
+
+        console.log("ERROR FETCH_ALL : " + error.message);
+    }
+
+}
+
+
+
 export const getPosts = (page) => async (dispatch) => {
 
     // const action = { type: 'FETCH_ALL', payload: [] }

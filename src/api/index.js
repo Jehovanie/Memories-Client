@@ -20,6 +20,8 @@ API.interceptors.request.use((req) => {
 ///this return all post via the back end
 export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
 
+export const fetchPost = (id) => API.get(`/posts/${id}`);
+
 ///get post from back by the param/query
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`)
 
