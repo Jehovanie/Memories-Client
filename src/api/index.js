@@ -37,6 +37,9 @@ export const deletedPost = (id) => API.delete(`/posts/${id}`);
 ///like updata but just the champ like to add.
 export const add_like = (id) => API.patch(`posts/${id}/likePost`);
 
+///comment post
+export const commentPost = (value, id) => API.post(`/posts/${id}/comment`, { value })
+
 ///login
 export const signIn = (formData) => API.post("/user/signing", formData);
 

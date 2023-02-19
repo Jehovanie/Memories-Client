@@ -5,6 +5,7 @@ export const CREATE = "CREATE";
 export const UPDATE = "UPDATE";
 export const DELETE = "DELETE";
 export const ADD_LIKE = "ADD_LIKE";
+export const COMMENT = "COMMENT";
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";

@@ -13,6 +13,7 @@ import MoreHorizonIcon from '@material-ui/icons/MoreHoriz';
 import useStyles from "./style"
 
 import { getPost, getPostBySearch } from "../../actions/posts_actions";
+import CommentSection from './CommentSection/CommentSection';
 
 const PostDetails = () => {
     const { id } = useParams();
@@ -72,7 +73,7 @@ const PostDetails = () => {
 
                     <Divider style={{ margin: '20px 0 ' }} />
 
-                    <Typography variant="body1"><strong>Comments - coming soon!</strong></Typography>
+                    <CommentSection post={post} />
 
                     <Divider style={{ margin: '20px 0 ' }} />
 

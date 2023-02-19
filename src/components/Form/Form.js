@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatedPost } from '../../actions/posts_actions'
 import FileBase from "react-file-base64";
@@ -15,6 +15,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
 
     const classes = useStyles();
+    const navigate = useNavigate();
 
     ///new data to create
     const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
@@ -52,7 +53,7 @@ const Form = ({ currentId, setCurrentId }) => {
             if (postData.title !== "" && postData.message !== "") {
 
                 ///
-                dispatch(createPost({ ...postData, name: user?.result?.name }));
+                dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
                 swal("Good Job", "Post Added!", "success")
             } else {
                 swal("Oops", "Please complete the form", "error")

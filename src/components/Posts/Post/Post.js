@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useStyles from './style';
 import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from "@material-ui/core";
@@ -18,19 +18,33 @@ const Post = ({ post, setCurrentId }) => {
     const location = useLocation();
     const user = JSON.parse(localStorage.getItem('profile'));
 
+    const [likes, setLikes] = useState(post?.likes)
+
     const navigate = useNavigate();
 
     useEffect(() => {
         /// i use this to change the status of the post when user is logout.
     }, [location])
 
+    const userId = user?.result?.googleId || user?.result?._id
+    const hasLikes = post.likes.find((like) => like === (userId))
+
+    const handleClick = async () => {
+        dispatch(add_like_post(post._id))
+
+        if (hasLikes) {
+            setLikes(post.likes.filter(id => id != userId))
+        } else {
+            setLikes([...post.likes, userId])
+        }
+    }
+
     const Likes = () => {
-        if (post.likes.length > 0) {
-            return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
-                ?
-                (<> <ThumbUpAltIcon fontSize="small" />  &nbsp; {post.likes.length > 2 ? `You and ${post.likes.length - 1} other persons.` : `${post.likes.length} Like${post.likes.length > 1 ? "s" : ""}`}  </>)
+        if (likes.length > 0) {
+            return hasLikes ?
+                (<> <ThumbUpAltIcon fontSize="small" />  &nbsp; {likes.length > 2 ? `You and ${likes.length - 1} other persons.` : `${likes.length} Like${likes.length > 1 ? "s" : ""}`}  </>)
                 :
-                (<> <ThumbUpAltOutlined fontSize="small" /> &nbsp; {post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}  </>);
+                (<> <ThumbUpAltOutlined fontSize="small" /> &nbsp; {likes.length} {likes.length === 1 ? "Like" : "Likes"}  </>);
         }
         return <> <ThumbUpAltOutlined fontSize="small" /> &nbsp; Like </>
     }
@@ -74,14 +88,14 @@ const Post = ({ post, setCurrentId }) => {
             </ButtonBase>
 
             <CardActions className={classes.cardAction}>
-                <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(add_like_post(post._id))}>
+                <Button size="small" color="primary" disabled={!user?.result} onClick={handleClick}>
                     <Likes />
                 </Button>
 
                 {/** dont allow the other to edit post only the creator can delete. */}
                 {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
 
-                    <Button size="small" color="primary" onClick={() => dispatch(delete_post(post._id))}>
+                    <Button size="small" color="secondary" onClick={() => dispatch(delete_post(post._id))}>
                         <DeleteIcon fontSize="small" /> &nbsp;
                         Delete
                     </Button>

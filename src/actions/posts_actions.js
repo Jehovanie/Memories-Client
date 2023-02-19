@@ -1,4 +1,4 @@
-import { FETCH_ALL, DELETE, CREATE, UPDATE, ADD_LIKE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, FETCH_POST } from "../constants/actionType";
+import { FETCH_ALL, DELETE, CREATE, COMMENT, UPDATE, ADD_LIKE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, FETCH_POST } from "../constants/actionType";
 import * as api from "../api";
 
 /**
@@ -26,8 +26,6 @@ export const getPost = (id) => async (dispatch) => {
 
 }
 
-
-
 export const getPosts = (page) => async (dispatch) => {
 
     // const action = { type: 'FETCH_ALL', payload: [] }
@@ -46,7 +44,6 @@ export const getPosts = (page) => async (dispatch) => {
 
 }
 
-
 export const getPostBySearch = (searchQuery) => async (dispatch) => {
 
     try {
@@ -63,7 +60,7 @@ export const getPostBySearch = (searchQuery) => async (dispatch) => {
     }
 }
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post, navigate) => async (dispatch) => {
 
     try {
         ///par defaut le data est dans le res.data 
@@ -71,6 +68,8 @@ export const createPost = (post) => async (dispatch) => {
 
         ///call the reducer to change the state.
         dispatch({ type: CREATE, payload: data });
+
+        navigate(`/posts/${data._id}`)
     } catch (error) {
         console.log("ERROR CREATE: " + error.message);
     }
@@ -83,6 +82,18 @@ export const updatedPost = (id, post) => async (dispatch) => {
         dispatch({ type: UPDATE, payload: data })
     } catch (error) {
         console.log("ERROR UPDATE : " + error.message);
+    }
+}
+
+export const commentPost = (comment, id) => async (dispatch) => {
+    try {
+        const { data } = await api.commentPost(comment, id);
+
+        dispatch({ type: COMMENT, payload: data })
+
+        return data.comments;
+    } catch (error) {
+        console.log("ERROR COMMENT: " + error)
     }
 }
 
