@@ -33,7 +33,7 @@ const Post = ({ post, setCurrentId }) => {
         dispatch(add_like_post(post._id))
 
         if (hasLikes) {
-            setLikes(post.likes.filter(id => id != userId))
+            setLikes(post.likes.filter(id => id !== userId))
         } else {
             setLikes([...post.likes, userId])
         }
@@ -55,24 +55,25 @@ const Post = ({ post, setCurrentId }) => {
     return (
         <Card className={classes.card} raised elevation={6} >
 
-            <ButtonBase className={classes.cardActionBase} onClick={openPost}>
 
-                <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
+            <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
 
-                <div className={classes.overlay}>
-                    <Typography variant="h6">{post.name}</Typography>
-                    <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
+            <div className={classes.overlay}>
+                <Typography variant="h6">{post.name}</Typography>
+                <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
+            </div>
+
+            {/** dont allow the other to edit post only the creator can change. */}
+            {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+
+                <div className={classes.overlay2}>
+                    <Button style={{ color: "white" }} size="small" onClick={() => setCurrentId(post._id)}>
+                        <MoreHorizonIcon fontSize="medium" />
+                    </Button>
                 </div>
-
-                {/** dont allow the other to edit post only the creator can change. */}
-                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-
-                    <div className={classes.overlay2}>
-                        <Button style={{ color: "white" }} size="small" onClick={() => setCurrentId(post._id)}>
-                            <MoreHorizonIcon fontSize="medium" />
-                        </Button>
-                    </div>
-                )}
+            )}
+            <ButtonBase className={classes.cardActionBase} onClick={openPost}>
+                
                 <div className={classes.details}>
                     <Typography variant="body2" color="textSecondary">
                         {post.tags.map((tag) => `#${tag} `)}
