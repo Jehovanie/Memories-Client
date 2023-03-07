@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { useDispatch, useStore } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Paper, Grid, Typography, Container } from "@material-ui/core"
-import { GoogleLogin } from "react-google-login"
+import { GoogleLogin } from '@react-oauth/google';
+
 import useStyles from "./styles"
 import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import Input from './Input';
 import Icon from './icon';
 import { signing, signup } from "../../actions/auth_action"
 import swal from 'sweetalert';
+import { GOOGLE_ID } from '../../constants/actionType';
+import jwt_decode from 'jwt-decode';
 
 const initialState = { firstname: "", lastName: "", email: "", password: "", confirmPassword: "" };
 
@@ -69,19 +72,31 @@ const Auth = () => {
     const switchMode = () => setSignUp((prevIsSignUp) => !prevIsSignUp)
 
     //id from google API
-    const google_client_id = "970466840444-mmsq4poghjuhs7lphv05t2588jjeb8og.apps.googleusercontent.com";
-
-    // const responseGoogle = (res) => {
-    //     console.log(res)
-    // }
-
+    const google_client_id = GOOGLE_ID;
 
     ///when the login from the gmail is successed
     const googleSuccess = (res) => {
         console.log("google authentification success ...")
 
-        const result = res?.profileObj;
-        const token = res?.tokenId;
+        const userObject = jwt_decode(res.credential)
+        console.log(userObject);
+
+        const result = { _id : userObject.jti, name :userObject.name, email: userObject.email , password: "","__v":0 }
+        const token = userObject.jti + "-" + userObject.sub;
+
+        // {
+        //     "result":
+        //     {
+        //         "_id":"64071508ff6c6e2bd11b2a2a",
+        //         "name":"Jehovanie RAMANDRIJOEL",
+        //         "email":"joelinaram007@gmail.com",
+        //         "password":
+        //         "$2a$12$Nhd3G5LowVA0D22t9AGskOhYLZqLUxAEpPsiY91erOlcrrx7ShWki",
+        //         "__v":0
+        //     },
+
+        //     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvZWxpbmFyYW0wMDdAZ21haWwuY29tIiwiaWQiOiI2NDA3MTUwOGZmNmM2ZTJiZDExYjJhMmEiLCJpYXQiOjE2NzgxOTM1MzIsImV4cCI6MTY3ODE5NDQzMn0.wq5Mmfm6sC8afNEzgUZomV_knzgiqPqTnfyJI-wKltg"
+        // }
 
         try {
 
@@ -150,7 +165,6 @@ const Auth = () => {
 
                     <GoogleLogin
                         clientId={google_client_id}
-                        plugin_name="text"
                         render={(renderProps) => (
                             <Button className={classes.googleBottom}
                                 color="primary"

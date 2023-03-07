@@ -12,3 +12,5 @@ export const END_LOADING = "END_LOADING";
 
 export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";
+
+export const GOOGLE_ID = "970466840444-mmsq4poghjuhs7lphv05t2588jjeb8og.apps.googleusercontent.com";

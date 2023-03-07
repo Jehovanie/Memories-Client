@@ -35,18 +35,18 @@ const Navbar = () => {
 
 
     ///check the data and when it change this, page reffhress. 
-    useEffect(() => {
-        const token = user?.token;
+    // useEffect(() => {
+    //     const token = user?.token;
 
-        //check if token is expired
-        if (token) {
-            const decodedToken = decode(token)
-            if (decodedToken.exp * 1000 < new Date().getTime())
-                logout();
-        }
+    //     //check if token is expired
+    //     if (token && decode(token)) {
+    //         const decodedToken = decode(token)
+    //         if (decodedToken.exp * 1000 < new Date().getTime())
+    //             logout();
+    //     }
 
-        setUser(JSON.parse(localStorage.getItem('profile')));
-    }, [location]) ///when the location is change, this page recharge.
+    //     setUser(JSON.parse(localStorage.getItem('profile')));
+    // }, [location]) ///when the location is change, this page recharge.
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
