@@ -59,7 +59,7 @@ const Post = ({ post, setCurrentId }) => {
             <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
 
             <div className={classes.overlay}>
-                <Typography variant="h6">{post.name}</Typography>
+                <Typography>{post.name}</Typography>
                 <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
 
@@ -73,7 +73,7 @@ const Post = ({ post, setCurrentId }) => {
                 </div>
             )}
             <ButtonBase className={classes.cardActionBase} onClick={openPost}>
-                
+
                 <div className={classes.details}>
                     <Typography variant="body2" color="textSecondary">
                         {post.tags.map((tag) => `#${tag} `)}
@@ -81,7 +81,7 @@ const Post = ({ post, setCurrentId }) => {
                 </div>
                 <Typography className={classes.title} variant="h5" gutterBottom>{post.title}</Typography>
                 <CardContent>
-                    <Typography variant="body2" component="p" color="textSecondary">
+                    <Typography variant="body2" color="textSecondary">
                         {(post.message.length > 150) ? post.message.substr(0, 150) + "...lire la suite" : post.message}
                     </Typography>
                 </CardContent>

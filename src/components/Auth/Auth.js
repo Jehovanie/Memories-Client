@@ -79,24 +79,8 @@ const Auth = () => {
         console.log("google authentification success ...")
 
         const userObject = jwt_decode(res.credential)
-        console.log(userObject);
-
-        const result = { _id : userObject.jti, name :userObject.name, email: userObject.email , password: "","__v":0 }
-        const token = userObject.jti + "-" + userObject.sub;
-
-        // {
-        //     "result":
-        //     {
-        //         "_id":"64071508ff6c6e2bd11b2a2a",
-        //         "name":"Jehovanie RAMANDRIJOEL",
-        //         "email":"joelinaram007@gmail.com",
-        //         "password":
-        //         "$2a$12$Nhd3G5LowVA0D22t9AGskOhYLZqLUxAEpPsiY91erOlcrrx7ShWki",
-        //         "__v":0
-        //     },
-
-        //     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvZWxpbmFyYW0wMDdAZ21haWwuY29tIiwiaWQiOiI2NDA3MTUwOGZmNmM2ZTJiZDExYjJhMmEiLCJpYXQiOjE2NzgxOTM1MzIsImV4cCI6MTY3ODE5NDQzMn0.wq5Mmfm6sC8afNEzgUZomV_knzgiqPqTnfyJI-wKltg"
-        // }
+        const result = { ...userObject, imageUrl: userObject.picture }
+        const token = res.credential
 
         try {
 
@@ -116,13 +100,6 @@ const Auth = () => {
         console.log(error)
         console.log("Google Sign In was unsuccessful. Try Again later")
     }
-
-    /**
-     * "You have created a new client application that uses libraries for user authentication or authorization that will soon be deprecated.
-     *  New clients must use the new libraries instead;
-     *  existing clients must also migrate before these libraries are deprecated. 
-     *  See the [Migration Guide](https://developers.google.com/identity/gsi/web/guides/gis-migration) for more information."
-     */
 
     return (
         <Container component="main" maxWidth="xs">

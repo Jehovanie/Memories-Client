@@ -73,11 +73,7 @@ const Home = () => {
     return (
         <Grow in>
             <Container maxWidth="xl">
-                <Grid container
-                    justifyContent="space-between"
-                    alignitem="stretch"
-                    spacing={2}
-                    className={classes.gridContainer}
+                <Grid container justifyContent="space-between" alignitem="stretch" spacing={2} className={classes.gridContainer}
                 >
 
                     <Grid item xs={12} sm={6} md={8} lg={9}>
@@ -87,24 +83,9 @@ const Home = () => {
                     <Grid item xs={12} sm={6} md={3} lg={3}>
                         <AppBar className={classes.appBarSearch} position="static" color="inherit">
 
-                            <TextField
-                                name="search"
-                                variant="outlined"
-                                label="Search Memories"
-                                onKeyUp={handlePressKey} /** onKeyUp : when user releases a key */
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
+                            <TextField name="search" variant="outlined" label="Search Memories" onKeyUp={handlePressKey} /** onKeyUp : when user releases a key */ value={search} onChange={(e) => setSearch(e.target.value)} />
 
-                            <ChipInput
-                                style={{ margin: "10px 0" }}
-                                variant="outlined"
-                                label="Search Tags"
-                                name="tags"
-                                value={tags}
-                                onAdd={handleAdd}
-                                onDelete={handleDelete}
-                            />
+                            <ChipInput style={{ margin: "10px 0" }} variant="outlined" label="Search Tags" name="tags" value={tags} onAdd={handleAdd} onDelete={handleDelete} />
 
                             <Button
                                 className={classes.searchButton}

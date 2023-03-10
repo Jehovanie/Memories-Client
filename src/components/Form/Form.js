@@ -18,13 +18,13 @@ const Form = ({ currentId, setCurrentId }) => {
     const navigate = useNavigate();
 
     ///new data to create
-    const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
+    const [postData, setPostData] = useState({ title: "", message: "", tags: "", selectedFile: "" });
     /// to dispatch action creat post
     const dispatch = useDispatch();
 
     const location = useLocation()
 
-    const [focus, setFocus] = useState({ title: '', message: false, tags: false, selectedFile: false });
+    const [focus, setFocus] = useState({ title: "", message: false, tags: false, selectedFile: false });
 
     // get the current post to update 
     const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId) : null)
@@ -76,7 +76,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
         return (
             <Paper className={classes.paper} >
-                <Typography variant="p" align="center">
+                <Typography align="center">
                     Please Sign In to create your own memories and like other's memories.
                 </Typography>
             </Paper>
@@ -93,7 +93,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     variant="outlined"
                     label="Title"
                     fullWidth
-                    value={postData.title}
+                    value={postData.title ?? ""}
                     onChange={(e) => setPostData({ ...postData, title: e.target.value })}
                     onFocus={() => setFocus({ ...focus, title: true })}
                 />
@@ -108,7 +108,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     fullWidth
                     multiline
                     minRows={3}
-                    value={postData.message}
+                    value={postData.message ?? ""}
                     onChange={(e) => setPostData({ ...postData, message: e.target.value })}
                     onFocus={() => setFocus({ ...focus, message: true })}
                 />
@@ -120,7 +120,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     variant="outlined"
                     label="Tags"
                     fullWidth
-                    value={postData.tags}
+                    value={postData.tags ?? ""}
                     onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
                 />
 
@@ -128,7 +128,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     <FileBase
                         type="file"
                         multiple={false}
-                        value={postData.selectedFile}
+                        value={postData.selectedFile ?? ""}
                         onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })}
                     />
 
